@@ -1,0 +1,9 @@
+version: '3'
+services:
+  vault:
+    build:
+      context: ./vault/
+      dockerfile: Dockerfile
+    image: vault-image:latest
+    ports:
+      - "9001:9001"
