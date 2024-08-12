@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.aadhar.vault.Constant.AadhaarErrorConstant;
 import com.aadhar.vault.exception.GenericException;
-import com.aadhar.vault.exception.GlobalExceptionHandler;
 import com.aadhar.vault.service.AadharAuthenticationKycService;
 
 import in.cdac.connector.ConnectorImpl;
@@ -77,7 +76,7 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		try {
 			log.debug("before making the connection");
 			vltResp = conn.requestVault(vltReq);
-			log.debug("After making the connection");
+			log.debug("After making the connection {}",vltResp);
 		} catch (Exception e) {
 			log.error("Error in connection: " + e.getMessage());
 			throw new GenericException("Error connecting to the vault service: " + e.getMessage(),
@@ -85,7 +84,8 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		}
 
 		if (vltResp.getStatus().equals(Status.N.value().trim())) {
-			log.debug("Error storing Aadhaar number in vault: {}", vltResp.getError());
+			log.debug("Error storing Aadhaar number in vault: {}", vltResp);
+			printLog(vltResp);
 			String errorMessage = errorMessages.get(vltResp.getError());
 			if (errorMessage != null) {
 				throw new GenericException("Failed to store Aadhaar number in vault. Error code: " + vltResp.getError()
@@ -128,6 +128,7 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		try {
 			log.debug("before making the connection");
 			respObjuid = conn.requestVault(reqObject);
+			log.debug("after making the connection {}",respObjuid);
 		} catch (Exception e) {
 			log.error("Error in connection: " + e.getMessage());
 			throw new GenericException("Error connecting to the vault service: " + e.getMessage(),
@@ -135,7 +136,8 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		}
 
 		if (respObjuid.getStatus().equals(Status.N.value().trim())) {
-			log.debug("Error retrieving Aadhaar number from vault: {}", respObjuid.getError());
+			log.debug("Error retrieving Aadhaar number from vault: {}", respObjuid);
+			printLog(respObjuid);
 			String errorMessage = errorMessages.get(respObjuid.getError());
 			if (errorMessage != null) {
 				throw new GenericException("Failed to retrieve Aadhaar number from vault. Error code: "
@@ -179,7 +181,9 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 
 		ResponseObject respObjuid;
 		try {
+			log.debug("before making the connection");
 			respObjuid = conn.requestVault(vltReq);
+			log.debug("after making the connection",respObjuid);
 		} catch (Exception e) {
 			log.error("Error in connection: " + e.getMessage());
 			throw new GenericException("Error connecting to the vault service: " + e.getMessage(),
@@ -187,7 +191,8 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		}
 
 		if (respObjuid.getStatus().equals(Status.N.value().trim())) {
-			log.error("Error retrieving UUID: {}", respObjuid.getError());
+			log.error("Error retrieving UUID: {}", respObjuid);
+			printLog(respObjuid);
 			String errorMessage = errorMessages.get(respObjuid.getError());
 			if (errorMessage != null) {
 				throw new GenericException(
@@ -233,7 +238,9 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 
 		ResponseObject respObjuid;
 		try {
+			log.debug("before making the connection");
 			respObjuid = conn.requestVault(reqObject);
+			log.debug("after making the connection {}",respObjuid);
 		} catch (Exception e) {
 			log.error("Error in connection: " + e.getMessage());
 			throw new GenericException("Error connecting to the vault service: " + e.getMessage(),
@@ -241,7 +248,8 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		}
 
 		if (respObjuid.getStatus().equals(Status.N.value().trim())) {
-			log.debug("Error : " + respObjuid.getError());
+			log.debug("Error : {}" , respObjuid);
+			printLog(respObjuid);
 			String errorMessage = errorMessages.get(respObjuid.getError());
 			if (errorMessage != null) {
 				throw new GenericException(
@@ -287,7 +295,9 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		ResponseObject respObjuid;
 
 		try {
+			log.debug("before making the connection");
 			respObjuid = conn.requestVault(reqObject);
+			log.debug("after making the connection{}",respObjuid);
 		} catch (Exception e) {
 			log.error("Error in connection: " + e.getMessage());
 			throw new GenericException("Error connecting to the vault service: " + e.getMessage(),
@@ -295,7 +305,8 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		}
 
 		if (respObjuid.getStatus().equals(Status.N.value().trim())) {
-			log.debug("Error : " + respObjuid.getError());
+			log.debug("Error :{} " , respObjuid);
+			printLog(respObjuid);
 			String errorMessage = errorMessages.get(respObjuid.getError());
 			if (errorMessage != null) {
 				throw new GenericException(
@@ -310,6 +321,17 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 			log.debug("return refNum");
 			return respObjuid.getRefNum();
 		}
+	}
+	
+	public void printLog(ResponseObject resp) {
+		log.debug("after Error{}",resp.getError());
+		log.debug("after id data{}",resp.getIdData());
+		log.debug("after id type{}",resp.getIdType());
+		log.debug("after key identifiet{}",resp.getKeyidentifier());
+		log.debug("after number{}",resp.getNumber());
+		log.debug("after ref num{}",resp.getRefNum());
+		log.debug("after status{}",resp.getStatus());
+		log.debug("after txn{}",resp.getTxn());
 	}
 
 }
