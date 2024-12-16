@@ -16,6 +16,7 @@ import com.aadhar.vault.service.AadharAuthenticationKycService;
 
 import in.cdac.connector.ConnectorImpl;
 import in.cdac.connector.IConnector;
+import in.cdac.cryptoservice.Idtype;
 import in.cdac.cryptoservice.KeyType;
 import in.cdac.cryptoservice.Operations;
 import in.cdac.cryptoservice.Status;
@@ -29,16 +30,16 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 
 	private final Logger log = LoggerFactory.getLogger(AadharAuthenticationKycServiceImpl.class);
 
-	@Value("${accessCode}")
+	@Value("${ac}")
 	private String ac;
 
-	@Value("${subCode}")
+	@Value("${sa}")
 	private String sc;
 
-	@Value("${licenseKey}")
+	@Value("${lk}")
 	private String lk;
 
-	@Value("${url}")
+	@Value("${vaulturl}")
 	private String url;
 
 	@Override
@@ -58,7 +59,7 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		RequestObject vltReq = new RequestObject();
 
 		vltReq.setOpr(Operations.STRUID);
-
+		vltReq.setIdType(Idtype.UID);
 		// set Aadhaar number
 		vltReq.setNumber(aadharNo);
 		vltReq.setTxn(UUID.randomUUID().toString());
@@ -66,11 +67,13 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		vltReq.setRefNum("");
 		vltReq.setKeytype(KeyType.AES);
 		vltReq.setTkntype(TokenType.SOFT);
+		
 		vltReq.setAc(ac);
 		vltReq.setSa(sc);
 		vltReq.setLk(lk);
 		vltReq.setUrl(url);
-
+		log.debug("Config param");
+		vltReq.setFileParam("config.properties");
 		ResponseObject vltResp;
 
 		try {

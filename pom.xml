@@ -36,20 +36,44 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+	
 		<dependency>
-			<groupId>com.ADVconnector</groupId>
+			<groupId>com.ADVSecurevaultconnector</groupId>
 			<artifactId>Connector-ADV</artifactId>
 			<version>1.0</version>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>com.cryptoservice</groupId>
 			<artifactId>cryptoservice</artifactId>
 			<version>1.0</version>
 			<scope>compile</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.bouncycastle</groupId>
+		    <artifactId>bcprov-jdk18on</artifactId>
+		    <version>1.72</version>
+		</dependency>
+
+		<!--<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		    <version>2.2.8</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.14</version>
+		</dependency>
+				
+		<dependency>
+		    <groupId>commons-logging</groupId>
+		    <artifactId>commons-logging</artifactId>
+		    <version>1.2</version>
+		</dependency>-->
+				
 
 
 	</dependencies>
