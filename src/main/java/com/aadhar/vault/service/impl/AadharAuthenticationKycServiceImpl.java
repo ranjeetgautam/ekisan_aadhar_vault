@@ -68,10 +68,10 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		vltReq.setKeytype(KeyType.AES);
 		vltReq.setTkntype(TokenType.SOFT);
 		
-		vltReq.setAc(ac);
-		vltReq.setSa(sc);
-		vltReq.setLk(lk);
-		vltReq.setUrl(url);
+		//vltReq.setAc(ac);
+		//vltReq.setSa(sc);
+		//vltReq.setLk(lk);
+		//vltReq.setUrl(url);
 		log.debug("Config param");
 		vltReq.setFileParam("config.properties");
 		ResponseObject vltResp;
@@ -126,6 +126,8 @@ public class AadharAuthenticationKycServiceImpl implements AadharAuthenticationK
 		reqObject.setSa(sc);
 		reqObject.setLk(lk);
 		reqObject.setUrl(url);
+		log.debug("Config param");
+		reqObject.setFileParam("config.properties");
 
 		ResponseObject respObjuid;
 		try {
